@@ -1,0 +1,22 @@
+FROM quay.io/toolbx/arch-toolbox:latest
+
+WORKDIR /tmp
+
+# Install:
+# - yay, because it is nice to have
+# - a bunch of random utils: fzf, ripgrep, fd, jq, openbsd-netcat
+# - neovim, because I always need it
+# - npm, because a bunch of useful LSPs depend on it (json, yaml)
+
+RUN pacman -Syu --noconfirm \
+    && pacman -S --needed --noconfirm git base-devel \
+    && runuser -u nobody -- git clone https://aur.archlinux.org/yay-bin.git \
+    && cd yay-bin \
+    && runuser -u nobody -- makepkg \
+    && pacman -U --noconfirm ./yay-bin-*.pkg.tar.zst \
+    && cd .. \
+    && rm -rf yay-bin \
+    && pacman -S --noconfirm neovim fzf ripgrep fd jq openbsd-netcat npm
+
+LABEL com.github.containers.toolbox="true" \
+      name="lfdwm-base"
