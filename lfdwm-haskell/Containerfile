@@ -1,0 +1,7 @@
+FROM lfdwm-base:latest
+
+RUN pacman -Syu --noconfirm \
+    && pacman -S --noconfirm ghc hlint entr
+
+LABEL com.github.containers.toolbox="true" \
+      name="lfdwm-haskell"

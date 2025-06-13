@@ -16,7 +16,7 @@ RUN pacman -Syu --noconfirm \
     && pacman -U --noconfirm ./yay-bin-*.pkg.tar.zst \
     && cd .. \
     && rm -rf yay-bin \
-    && pacman -S --noconfirm neovim fzf ripgrep fd jq openbsd-netcat npm
+    && pacman -S --noconfirm neovim fzf ripgrep fd jq openbsd-netcat npm python unzip
 
 LABEL com.github.containers.toolbox="true" \
       name="lfdwm-base"
