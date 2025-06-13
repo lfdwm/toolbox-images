@@ -1,7 +1,8 @@
 FROM lfdwm-base:latest
 
 RUN pacman -Syu --noconfirm \
-    && pacman -S --noconfirm ghc hlint entr
+    && pacman -S --noconfirm ghc hlint entr stack \
+    && runuser -u builder -- yay -S --noconfirm ghcup-hs-bin
 
 LABEL com.github.containers.toolbox="true" \
       name="lfdwm-haskell"
