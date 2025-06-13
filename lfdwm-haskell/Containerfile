@@ -1,7 +1,7 @@
 FROM lfdwm-base:latest
 
 RUN pacman -Syu --noconfirm \
-    && pacman -S --noconfirm ghc hlint entr stack \
+    && pacman -S --noconfirm entr \
     && runuser -u builder -- yay -S --noconfirm ghcup-hs-bin
 
 LABEL com.github.containers.toolbox="true" \

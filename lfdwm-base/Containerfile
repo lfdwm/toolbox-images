@@ -10,7 +10,7 @@ WORKDIR /tmp
 
 RUN pacman -Syu --noconfirm \
     && pacman -S --needed --noconfirm git base-devel \
-    && useradd -m -G wheel builder \
+    && useradd -m -G wheel builder -u 2000\
     && passwd -d builder \
     && echo 'builder ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
     && runuser -u builder -- git clone https://aur.archlinux.org/yay-bin.git \
