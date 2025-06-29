@@ -1,0 +1,17 @@
+FROM lfdwm-base-gui:latest
+
+# Enable multilib, install wine and yabridge, and finally bitwig
+# Also need to lock wine to 9.21 as yabridge doesn't support newer versions ATM
+
+RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf \
+  && pacman -Syu --noconfirm \
+  && pacman -S --noconfirm wine-staging yabridge yabridgectl unixodbc \
+  && runuser -u builder -- yay -S downgrade --noconfirm  \
+  && downgrade --latest --prefer-cache --ignore always 'wine-staging=9.21' -- --noconfirm \ 
+  && runuser -u builder -- yay -S bitwig-studio --noconfirm 
+
+# Copy over util script for setting up WINEPREFIX, yabridge and launching bitwig
+COPY ./launch-bitwig.sh /usr/local/bin/
+
+LABEL com.github.containers.toolbox="true" \
+      name="lfdwm-bitwig"
