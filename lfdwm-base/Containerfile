@@ -2,11 +2,20 @@ FROM quay.io/toolbx/arch-toolbox:latest
 
 WORKDIR /tmp
 
+# Set up locale
+
+RUN sed -i 's/^#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen \
+  && locale-gen \
+  && echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
 # Install:
 # - yay, because it is nice to have
 # - a bunch of random utils: fzf, ripgrep, fd, jq, openbsd-netcat
 # - neovim, because I always need it
 # - npm, because a bunch of useful LSPs depend on it (json, yaml)
+#
+#  Also set up a "builder" user for tools like yay that don't want to
+#  run as root, but want to be able to run *some* things as root.
 
 RUN pacman -Syu --noconfirm \
     && pacman -S --needed --noconfirm git base-devel \
