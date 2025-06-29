@@ -1,0 +1,10 @@
+FROM lfdwm-base:latest
+
+# This image is meant as a base for all containers that need to run GUI
+# X11 clients, and should provide whatever is commonly neccesary for that.
+
+RUN pacman -Syu --noconfirm \
+    && pacman -S --noconfirm gtk3 gtk4 xcb-util libpulse pipewire pipewire-alsa alsa-utils
+
+LABEL com.github.containers.toolbox="true" \
+      name="lfdwm-base-gui"
